@@ -1,0 +1,104 @@
+{
+  "project": "AIClinicalTrialMatching",
+  "marker": "// === Batch 01 Gaps & Frontend Mounts ===",
+  "features": [
+    {
+      "slug": "patient-outcome-predictor-ml-model-forecasting-dro",
+      "component": "PatientOutcomePredictorMlModelForecastingDroPage",
+      "label": "Patient outcome predictor ML model forecasting dropouts and adverse events early",
+      "endpoint": "/api/cf-patient-outcome-predictor-ml-model-forecasting-dro",
+      "kind": "cfs"
+    },
+    {
+      "slug": "site-network-optimizer-recommending-sites-that-max",
+      "component": "SiteNetworkOptimizerRecommendingSitesThatMaxPage",
+      "label": "Site network optimizer recommending sites that maximize recruitment speed and diversity",
+      "endpoint": "/api/cf-site-network-optimizer-recommending-sites-that-max",
+      "kind": "cfs"
+    },
+    {
+      "slug": "regulatory-compliance-agent-auto-generating-amendm",
+      "component": "RegulatoryComplianceAgentAutoGeneratingAmendmPage",
+      "label": "Regulatory compliance agent auto-generating amendments, adverse-event reports, and submissions",
+      "endpoint": "/api/cf-regulatory-compliance-agent-auto-generating-amendm",
+      "kind": "cfs"
+    },
+    {
+      "slug": "integrations-with-medidata-rave-edc-veeva-vault-ct",
+      "component": "IntegrationsWithMedidataRaveEdcVeevaVaultCtPage",
+      "label": "Integrations with Medidata Rave (EDC), Veeva Vault (CTMS), and Epic/Cerner (EHR)",
+      "endpoint": "/api/cf-integrations-with-medidata-rave-edc-veeva-vault-ct",
+      "kind": "cfs"
+    },
+    {
+      "slug": "no-ai-emr-to-protocol-matcher-only-manual-screenin",
+      "component": "NoAiEmrToProtocolMatcherOnlyManualScreeninPage",
+      "label": "No AI EMR-to-protocol matcher (only manual screening)",
+      "endpoint": "/api/gap-no-ai-emr-to-protocol-matcher-only-manual-screenin",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-ai-patient-friendly-consent-form-generator",
+      "component": "NoAiPatientFriendlyConsentFormGeneratorPage",
+      "label": "No AI patient-friendly consent-form generator",
+      "endpoint": "/api/gap-no-ai-patient-friendly-consent-form-generator",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-ai-investigator-brochure-summarization",
+      "component": "NoAiInvestigatorBrochureSummarizationPage",
+      "label": "No AI investigator-brochure summarization",
+      "endpoint": "/api/gap-no-ai-investigator-brochure-summarization",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-ai-digital-twin-synthetic-control-arm",
+      "component": "NoAiDigitalTwinSyntheticControlArmPage",
+      "label": "No AI digital twin / synthetic control arm",
+      "endpoint": "/api/gap-no-ai-digital-twin-synthetic-control-arm",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-direct-edc-ctms-ehr-api-client-medidata-veeva-e",
+      "component": "NoDirectEdcCtmsEhrApiClientMedidataVeevaEPage",
+      "label": "No direct EDC/CTMS/EHR API client (Medidata, Veeva, Epic) beyond webhook scaffold",
+      "endpoint": "/api/gap-no-direct-edc-ctms-ehr-api-client-medidata-veeva-e",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-e-consent-module-with-audit-trail",
+      "component": "NoEConsentModuleWithAuditTrailPage",
+      "label": "No e-consent module with audit trail",
+      "endpoint": "/api/gap-no-e-consent-module-with-audit-trail",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-remote-monitoring-televisit-module",
+      "component": "NoRemoteMonitoringTelevisitModulePage",
+      "label": "No remote-monitoring/televisit module",
+      "endpoint": "/api/gap-no-remote-monitoring-televisit-module",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-randomization-trial-supply-management-rtsm",
+      "component": "NoRandomizationTrialSupplyManagementRtsmPage",
+      "label": "No randomization & trial-supply management (RTSM)",
+      "endpoint": "/api/gap-no-randomization-trial-supply-management-rtsm",
+      "kind": "gap"
+    },
+    {
+      "slug": "no-patient-engagement-portal-with-rewards",
+      "component": "NoPatientEngagementPortalWithRewardsPage",
+      "label": "No patient-engagement portal with rewards",
+      "endpoint": "/api/gap-no-patient-engagement-portal-with-rewards",
+      "kind": "gap"
+    },
+    {
+      "slug": "notification-routes-exist-but-no-sms-email-deliver",
+      "component": "NotificationRoutesExistButNoSmsEmailDeliverPage",
+      "label": "Notification routes exist but no SMS/email delivery channel",
+      "endpoint": "/api/gap-notification-routes-exist-but-no-sms-email-deliver",
+      "kind": "gap"
+    }
+  ]
+}

@@ -17,6 +17,8 @@ import NotificationsPage from './pages/NotificationsPage';
 import ReportsPage from './pages/ReportsPage';
 import EligibilityPage from './pages/EligibilityPage';
 import OutcomesPage from './pages/OutcomesPage';
+import AIToolsPage from './pages/AIToolsPage';
+import WebhooksPage from './pages/WebhooksPage';
 
 function Sidebar({ user, onLogout }) {
   const location = useLocation();
@@ -25,6 +27,7 @@ function Sidebar({ user, onLogout }) {
     { path: '/patients', icon: '\u{1F9D1}\u200D\u2695\uFE0F', label: 'Patients' },
     { path: '/trials', icon: '\u{1F9EA}', label: 'Clinical Trials' },
     { path: '/matches', icon: '\u{1F3AF}', label: 'AI Matching' },
+    { path: '/ai-tools', icon: '\u2728', label: 'AI Tools' },
     { path: '/eligibility', icon: '\u2705', label: 'Eligibility' },
     { path: '/sites', icon: '\u{1F3E5}', label: 'Sites' },
     { path: '/enrollments', icon: '\u{1F4CB}', label: 'Enrollments' },
@@ -36,6 +39,7 @@ function Sidebar({ user, onLogout }) {
     { path: '/regulatory', icon: '\u{1F4DC}', label: 'Regulatory' },
     { path: '/notifications', icon: '\u{1F514}', label: 'Notifications' },
     { path: '/reports', icon: '\u{1F4C4}', label: 'Reports' },
+    { path: '/webhooks', icon: '\u{1FA9D}', label: 'Webhooks' },
   ];
 
   return (
@@ -120,6 +124,7 @@ function App() {
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/trials" element={<TrialsPage />} />
           <Route path="/matches" element={<MatchesPage />} />
+          <Route path="/ai-tools" element={<AIToolsPage />} />
           <Route path="/eligibility" element={<EligibilityPage />} />
           <Route path="/sites" element={<SitesPage />} />
           <Route path="/enrollments" element={<EnrollmentsPage />} />
@@ -131,6 +136,7 @@ function App() {
           <Route path="/regulatory" element={<RegulatoryPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/webhooks" element={<WebhooksPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </ProtectedLayout>

@@ -5,8 +5,25 @@ const router = express.Router();
 
 router.get('/', authenticate, async (req, res) => {
   try {
-    const trials = await Trial.findAll({ order: [['createdAt', 'DESC']] });
-    res.json(trials);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const offset = (page - 1) * limit;
+
+    const where = {};
+    if (req.query.status) where.status = req.query.status;
+    if (req.query.phase) where.phase = req.query.phase;
+
+    const { count, rows } = await Trial.findAndCountAll({
+      where,
+      order: [['createdAt', 'DESC']],
+      limit,
+      offset,
+    });
+
+    res.json({
+      data: rows,
+      pagination: { page, limit, total: count, totalPages: Math.ceil(count / limit) },
+    });
   } catch (error) { res.status(500).json({ error: error.message }); }
 });
 

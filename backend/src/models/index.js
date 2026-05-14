@@ -67,6 +67,22 @@ const Match = sequelize.define('Match', {
   matchReason: { type: DataTypes.TEXT },
   status: { type: DataTypes.STRING, defaultValue: 'pending' },
   aiAnalysis: { type: DataTypes.TEXT },
+  aiResults: { type: DataTypes.JSONB, defaultValue: {} },
+});
+
+// AuditLog Model — persistent 21 CFR Part 11 audit trail
+const AuditLog = sequelize.define('AuditLog', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  userId: { type: DataTypes.INTEGER },
+  userEmail: { type: DataTypes.STRING },
+  action: { type: DataTypes.STRING, allowNull: false },
+  resource: { type: DataTypes.STRING },
+  resourceId: { type: DataTypes.STRING },
+  patientId: { type: DataTypes.INTEGER },
+  reason: { type: DataTypes.TEXT },
+  ipAddress: { type: DataTypes.STRING },
+  userAgent: { type: DataTypes.STRING },
+  payload: { type: DataTypes.JSONB, defaultValue: {} },
 });
 
 // Site Model
@@ -268,4 +284,5 @@ module.exports = {
   Report,
   Eligibility,
   Outcome,
+  AuditLog,
 };

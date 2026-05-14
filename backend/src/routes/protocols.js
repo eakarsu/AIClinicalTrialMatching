@@ -4,8 +4,20 @@ const { authenticate } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', authenticate, async (req, res) => {
-  try { res.json(await Protocol.findAll({ order: [['createdAt', 'DESC']] })); }
-  catch (error) { res.status(500).json({ error: error.message }); }
+  try {
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.min(200, Math.max(1, parseInt(req.query.limit) || 50));
+    const offset = (page - 1) * limit;
+    const { count, rows } = await Protocol.findAndCountAll({
+      order: [['createdAt', 'DESC']],
+      limit,
+      offset,
+    });
+    res.json({
+      data: rows,
+      pagination: { page, limit, total: count, totalPages: Math.ceil(count / limit) },
+    });
+  } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
 router.get('/:id', authenticate, async (req, res) => {

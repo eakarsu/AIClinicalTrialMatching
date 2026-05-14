@@ -1,6 +1,7 @@
 const express = require('express');
 const https = require('https');
 const { authenticate } = require('../middleware/auth');
+const { aiRateLimiter } = require('../middleware/rateLimiter');
 const { Patient, Trial, Match, Biomarker, DrugInteraction, Outcome } = require('../models');
 const router = express.Router();
 
@@ -42,7 +43,7 @@ function callOpenRouter(messages) {
 }
 
 // AI Patient-Trial Matching
-router.post('/match-patient', authenticate, async (req, res) => {
+router.post('/match-patient', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { patientId } = req.body;
     const patient = await Patient.findByPk(patientId);
@@ -66,7 +67,7 @@ router.post('/match-patient', authenticate, async (req, res) => {
 });
 
 // AI Patient Screening
-router.post('/screen-patient', authenticate, async (req, res) => {
+router.post('/screen-patient', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { patientId, trialId } = req.body;
     const patient = await Patient.findByPk(patientId);
@@ -89,7 +90,7 @@ router.post('/screen-patient', authenticate, async (req, res) => {
 });
 
 // AI Biomarker Analysis
-router.post('/analyze-biomarkers', authenticate, async (req, res) => {
+router.post('/analyze-biomarkers', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { patientId } = req.body;
     const biomarkers = await Biomarker.findAll({ where: { patientId } });
@@ -110,7 +111,7 @@ router.post('/analyze-biomarkers', authenticate, async (req, res) => {
 });
 
 // AI Drug Interaction Check
-router.post('/check-interactions', authenticate, async (req, res) => {
+router.post('/check-interactions', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { medications } = req.body;
 
@@ -128,7 +129,7 @@ router.post('/check-interactions', authenticate, async (req, res) => {
 });
 
 // AI Outcome Prediction
-router.post('/predict-outcome', authenticate, async (req, res) => {
+router.post('/predict-outcome', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { patientId, trialId } = req.body;
     const patient = await Patient.findByPk(patientId);
@@ -149,7 +150,7 @@ router.post('/predict-outcome', authenticate, async (req, res) => {
 });
 
 // AI Protocol Analysis
-router.post('/analyze-protocol', authenticate, async (req, res) => {
+router.post('/analyze-protocol', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { protocolId } = req.body;
     const { Protocol } = require('../models');
@@ -171,7 +172,7 @@ router.post('/analyze-protocol', authenticate, async (req, res) => {
 });
 
 // AI Adverse Event Analysis
-router.post('/analyze-adverse-events', authenticate, async (req, res) => {
+router.post('/analyze-adverse-events', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { trialId } = req.body;
     const { AdverseEvent } = require('../models');
@@ -193,7 +194,7 @@ router.post('/analyze-adverse-events', authenticate, async (req, res) => {
 });
 
 // AI Regulatory Compliance Check
-router.post('/check-compliance', authenticate, async (req, res) => {
+router.post('/check-compliance', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { trialId } = req.body;
     const { Regulatory } = require('../models');
@@ -215,7 +216,7 @@ router.post('/check-compliance', authenticate, async (req, res) => {
 });
 
 // AI Report Generation
-router.post('/generate-report', authenticate, async (req, res) => {
+router.post('/generate-report', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { reportType, trialId } = req.body;
     const trial = trialId ? await Trial.findByPk(trialId) : null;
@@ -235,7 +236,7 @@ router.post('/generate-report', authenticate, async (req, res) => {
 });
 
 // AI Enrollment Optimization
-router.post('/optimize-enrollment', authenticate, async (req, res) => {
+router.post('/optimize-enrollment', authenticate, aiRateLimiter, async (req, res) => {
   try {
     const { trialId } = req.body;
     const trial = await Trial.findByPk(trialId);
