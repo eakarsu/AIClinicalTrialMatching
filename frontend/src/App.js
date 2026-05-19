@@ -19,6 +19,7 @@ import EligibilityPage from './pages/EligibilityPage';
 import OutcomesPage from './pages/OutcomesPage';
 import AIToolsPage from './pages/AIToolsPage';
 import WebhooksPage from './pages/WebhooksPage';
+import CustomViewsPage from './pages/CustomViewsPage';
 
 function Sidebar({ user, onLogout }) {
   const location = useLocation();
@@ -40,6 +41,7 @@ function Sidebar({ user, onLogout }) {
     { path: '/notifications', icon: '\u{1F514}', label: 'Notifications' },
     { path: '/reports', icon: '\u{1F4C4}', label: 'Reports' },
     { path: '/webhooks', icon: '\u{1FA9D}', label: 'Webhooks' },
+    { path: '/custom-views', icon: '\u{1F4CA}', label: 'Trial Views' },
   ];
 
   return (
@@ -137,6 +139,7 @@ function App() {
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/webhooks" element={<WebhooksPage />} />
+          <Route path="/custom-views" element={<CustomViewsPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </ProtectedLayout>

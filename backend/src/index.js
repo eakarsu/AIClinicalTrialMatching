@@ -66,6 +66,11 @@ app.use('/api/compliance', complianceRoutes);
 // Audit-recommended additions (integration API)
 app.use('/api/webhooks', require('./routes/webhooks'));
 
+// Custom views — 4 endpoints (2 VIZ: enrollment funnel + criteria heatmap;
+// 2 NON-VIZ: patient match summary PDF + eligibility criteria editor CRUD).
+// Mounted BEFORE any 404 handler so /api/custom-views/* resolves first.
+app.use('/api/custom-views', require('./routes/customViews'));
+
 // Export routes — mount reportRoutes at /api/export so /export/matches becomes /api/export/matches
 const exportRoutes = require('./routes/reports');
 app.use('/api/export', exportRoutes);
@@ -88,6 +93,7 @@ app.use('/api/site-network-optimizer', require('./routes/siteNetworkOptimizer'))
 app.use('/api/regulatory-agent', require('./routes/regulatoryAgent')); // apply pass 6 — audit custom suggestion
 
 app.use('/api/trial-integrations', require('./routes/trialPlatformIntegrations')); // apply pass 6 — audit custom suggestion
+
 app.listen(PORT, () => {
       console.log(`Backend server running on port ${PORT}`);
     });
