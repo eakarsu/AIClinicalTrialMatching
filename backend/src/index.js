@@ -63,6 +63,7 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/ai', aiNewRoutes);
 app.use('/api/ai', aiAdvancedRoutes);
 app.use('/api/compliance', complianceRoutes);
+app.use('/api/retention-risk', require('./routes/retentionRisk'));
 // Audit-recommended additions (integration API)
 app.use('/api/webhooks', require('./routes/webhooks'));
 

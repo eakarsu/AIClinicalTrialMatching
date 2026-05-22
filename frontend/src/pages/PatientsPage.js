@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactMarkdown from 'react-markdown';
+import AIResultDisplay from '../components/AIResultDisplay';
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState([]);
@@ -18,7 +19,7 @@ export default function PatientsPage() {
   const loadData = async () => {
     try {
       const res = await api.get('/patients');
-      setPatients(res.data);
+      setPatients(Array.isArray(res.data) ? res.data : (res.data?.items || res.data?.data || res.data?.rows || []));
     } catch (err) { console.error(err); }
     setLoading(false);
   };
@@ -94,19 +95,8 @@ export default function PatientsPage() {
         </div>
         {aiLoading && <div className="ai-loading"><div className="pulse"></div><p>AI is analyzing patient data...</p></div>}
         {aiResult && (
-          <div className="ai-output">
-            <div className="ai-output-header">
-              <span className="ai-badge">AI ANALYSIS</span>
-              <span className="model-info">Model: {aiResult.model || 'Claude Haiku'} | Trials Analyzed: {aiResult.trialsAnalyzed || 'N/A'}</span>
-            </div>
-            <div className="ai-output-body"><ReactMarkdown>{aiResult.analysis}</ReactMarkdown></div>
-            {aiResult.usage && (
-              <div className="ai-output-footer">
-                <span>Tokens: {aiResult.usage.total_tokens}</span>
-                <span>Prompt: {aiResult.usage.prompt_tokens}</span>
-                <span>Response: {aiResult.usage.completion_tokens}</span>
-              </div>
-            )}
+          <div style={{ marginTop: 16 }}>
+            <AIResultDisplay result={aiResult} loading={false} error={null} />
           </div>
         )}
       </div>
@@ -130,19 +120,18 @@ export default function PatientsPage() {
             <tr><th>Name</th><th>Diagnosis</th><th>Stage</th><th>Gender</th><th>Biomarkers</th><th>Status</th></tr>
           </thead>
           <tbody>
-            {filtered.map(p => (
+            {(items || []).filter(p => `${p.firstName} ${p.lastName} ${p.diagnosis}`.toLowerCase().includes(search.toLowerCase())).map(p => (
               <tr key={p.id} onClick={() => setSelected(p)}>
                 <td><strong>{p.firstName} {p.lastName}</strong></td>
                 <td>{p.diagnosis}</td>
                 <td>{p.stage}</td>
                 <td>{p.gender}</td>
-                <td style={{maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{p.biomarkers}</td>
+                <td>{p.biomarkers}</td>
                 <td><span className={`badge ${p.status === 'active' ? 'badge-success' : 'badge-secondary'}`}>{p.status}</span></td>
               </tr>
             ))}
           </tbody>
         </table>
-        {filtered.length === 0 && <div className="empty-state"><div className="empty-icon">{'\u{1F9D1}\u200D\u2695\uFE0F'}</div><h3>No patients found</h3></div>}
       </div>
       {showForm && (
         <div className="modal-overlay" onClick={() => setShowForm(false)}>

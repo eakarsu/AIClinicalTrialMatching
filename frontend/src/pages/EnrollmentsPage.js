@@ -17,7 +17,7 @@ export default function EnrollmentsPage() {
   const loadData = async () => {
     try {
       const [e, p, t] = await Promise.all([api.get('/enrollments'), api.get('/patients'), api.get('/trials')]);
-      setItems(e.data); setPatients(p.data); setTrials(t.data);
+      setItems(Array.isArray(e.data) ? e.data : (e.data?.items || e.data?.data || e.data?.rows || [])); setPatients(Array.isArray(p.data) ? p.data : (p.data?.items || p.data?.data || p.data?.rows || [])); setTrials(Array.isArray(t.data) ? t.data : (t.data?.items || t.data?.data || t.data?.rows || []));
     } catch(e){} setLoading(false);
   };
 

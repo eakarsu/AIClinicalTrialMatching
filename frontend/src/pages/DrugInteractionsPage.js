@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactMarkdown from 'react-markdown';
+import AIResultDisplay from '../components/AIResultDisplay';
 
 export default function DrugInteractionsPage() {
   const [items, setItems] = useState([]);
@@ -16,7 +17,7 @@ export default function DrugInteractionsPage() {
   const [form, setForm] = useState(emptyForm);
 
   useEffect(() => { loadData(); }, []);
-  const loadData = async () => { try { const res = await api.get('/drug-interactions'); setItems(res.data); } catch(e){} setLoading(false); };
+  const loadData = async () => { try { const res = await api.get('/drug-interactions'); setItems(Array.isArray(res.data) ? res.data : (res.data?.items || res.data?.data || res.data?.rows || [])); } catch(e){} setLoading(false); };
 
   const handleSave = async () => {
     try {
@@ -91,10 +92,8 @@ export default function DrugInteractionsPage() {
         <button className="btn btn-primary" onClick={handleAICheck} disabled={aiLoading}>Check Interactions with AI</button>
         {aiLoading && <div className="ai-loading" style={{marginTop: 16}}><div className="pulse"></div><p>AI is checking interactions...</p></div>}
         {aiResult && (
-          <div className="ai-output" style={{marginTop: 16}}>
-            <div className="ai-output-header"><span className="ai-badge">AI INTERACTION CHECK</span><span className="model-info">Model: {aiResult.model || 'Claude Haiku'}</span></div>
-            <div className="ai-output-body"><ReactMarkdown>{aiResult.analysis}</ReactMarkdown></div>
-            {aiResult.usage && <div className="ai-output-footer"><span>Tokens: {aiResult.usage.total_tokens}</span></div>}
+          <div style={{ marginTop: 16 }}>
+            <AIResultDisplay result={aiResult} loading={false} error={null} />
           </div>
         )}
       </div>

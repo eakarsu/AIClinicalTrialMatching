@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactMarkdown from 'react-markdown';
+import AIResultDisplay from '../components/AIResultDisplay';
 
 export default function ReportsPage() {
   const [items, setItems] = useState([]);
@@ -21,7 +22,7 @@ export default function ReportsPage() {
   const loadData = async () => {
     try {
       const [r, t] = await Promise.all([api.get('/reports'), api.get('/trials')]);
-      setItems(r.data); setTrials(t.data);
+      setItems(Array.isArray(r.data) ? r.data : (r.data?.items || r.data?.data || r.data?.rows || [])); setTrials(Array.isArray(t.data) ? t.data : (t.data?.items || t.data?.data || t.data?.rows || []));
     } catch(e){} setLoading(false);
   };
 
@@ -117,10 +118,8 @@ export default function ReportsPage() {
         <button className="btn btn-primary" onClick={handleAIReport} disabled={aiLoading}>Generate AI Report</button>
         {aiLoading && <div className="ai-loading" style={{marginTop: 16}}><div className="pulse"></div><p>AI is generating report...</p></div>}
         {aiResult && (
-          <div className="ai-output" style={{marginTop: 16}}>
-            <div className="ai-output-header"><span className="ai-badge">AI REPORT</span><span className="model-info">Type: {aiResult.reportType} | Model: {aiResult.model || 'Claude Haiku'}</span></div>
-            <div className="ai-output-body"><ReactMarkdown>{aiResult.report}</ReactMarkdown></div>
-            {aiResult.usage && <div className="ai-output-footer"><span>Tokens: {aiResult.usage.total_tokens}</span></div>}
+          <div style={{ marginTop: 16 }}>
+            <AIResultDisplay result={aiResult} loading={false} error={null} />
           </div>
         )}
       </div>

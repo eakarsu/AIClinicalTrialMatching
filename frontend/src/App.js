@@ -20,6 +20,12 @@ import OutcomesPage from './pages/OutcomesPage';
 import AIToolsPage from './pages/AIToolsPage';
 import WebhooksPage from './pages/WebhooksPage';
 import CustomViewsPage from './pages/CustomViewsPage';
+import RetentionRiskPage from './pages/RetentionRiskPage';
+
+import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
+import CodexOperationsFeature from './pages/CodexOperationsFeature';
+
+import TimelineView from './pages/TimelineView';
 
 function Sidebar({ user, onLogout }) {
   const location = useLocation();
@@ -32,6 +38,7 @@ function Sidebar({ user, onLogout }) {
     { path: '/eligibility', icon: '\u2705', label: 'Eligibility' },
     { path: '/sites', icon: '\u{1F3E5}', label: 'Sites' },
     { path: '/enrollments', icon: '\u{1F4CB}', label: 'Enrollments' },
+    { path: '/retention-risk', icon: '\u{1F9ED}', label: 'Retention Risk' },
     { path: '/adverse-events', icon: '\u26A0\uFE0F', label: 'Adverse Events' },
     { path: '/protocols', icon: '\u{1F4D1}', label: 'Protocols' },
     { path: '/biomarkers', icon: '\u{1F9EC}', label: 'Biomarkers' },
@@ -112,6 +119,10 @@ function App() {
     return (
       <Router>
         <Routes>
+        <Route path="/insights/timeline" element={<TimelineView />} />
+        <Route path="/codex/custom-viz" element={<CodexCustomVizFeature />} />
+        <Route path="/codex/operations" element={<CodexOperationsFeature />} />
+
           <Route path="*" element={<LoginPage onLogin={handleLogin} />} />
         </Routes>
       </Router>
@@ -130,6 +141,7 @@ function App() {
           <Route path="/eligibility" element={<EligibilityPage />} />
           <Route path="/sites" element={<SitesPage />} />
           <Route path="/enrollments" element={<EnrollmentsPage />} />
+          <Route path="/retention-risk" element={<RetentionRiskPage />} />
           <Route path="/adverse-events" element={<AdverseEventsPage />} />
           <Route path="/protocols" element={<ProtocolsPage />} />
           <Route path="/biomarkers" element={<BiomarkersPage />} />

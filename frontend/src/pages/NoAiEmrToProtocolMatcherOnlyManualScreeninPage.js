@@ -13,7 +13,7 @@ export default function NoAiEmrToProtocolMatcherOnlyManualScreeninPage() {
     setBusy(true); setErr(''); setResult(null);
     try {
       const r = await api.post('/gap-no-ai-emr-to-protocol-matcher-only-manual-screenin/run', { input });
-      setResult(r.data);
+      setResult(Array.isArray(r.data) ? r.data : (r.data?.items || r.data?.data || r.data?.rows || []));
     } catch (e) {
       const data = e?.response?.data;
       if (data?.missing) setErr(`AI unavailable — set ${data.missing} in .env`);

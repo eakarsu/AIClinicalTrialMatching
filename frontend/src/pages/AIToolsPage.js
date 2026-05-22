@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import api from '../services/api';
 import aiService from '../services/aiService';
+import AIResultDisplay from '../components/AIResultDisplay';
 
 const TOOLS = [
   {
@@ -438,22 +439,12 @@ export default function AIToolsPage() {
       )}
 
       {result && (
-        <div className="ai-output" style={{ marginTop: 16 }}>
-          <div className="ai-output-header">
-            <span className="ai-badge">AI RESULT</span>
-            <span className="model-info">Model: {result.model || 'OpenRouter'}</span>
-          </div>
-          <div className="ai-output-body">
-            {resultText ? <ReactMarkdown>{String(resultText)}</ReactMarkdown> : <pre>{JSON.stringify(result, null, 2)}</pre>}
-          </div>
-          {result.usage && (
-            <div className="ai-output-footer">
-              <span>Tokens: {result.usage.total_tokens}</span>
-            </div>
-          )}
-          {result.disclaimer && (
-            <div className="ai-output-footer">
-              <em>{result.disclaimer}</em>
+        <div style={{ marginTop: 16 }}>
+          <AIResultDisplay result={result} loading={false} error={null} />
+          {(result.usage || result.disclaimer) && (
+            <div style={{ marginTop: 8, fontSize: 12, color: '#94a3b8' }}>
+              {result.usage && <span>Tokens: {result.usage.total_tokens}  </span>}
+              {result.disclaimer && <em>{result.disclaimer}</em>}
             </div>
           )}
         </div>

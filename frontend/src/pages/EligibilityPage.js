@@ -12,7 +12,7 @@ export default function EligibilityPage() {
   const [form, setForm] = useState(emptyForm);
 
   useEffect(() => { loadData(); }, []);
-  const loadData = async () => { try { const res = await api.get('/eligibility'); setItems(res.data); } catch(e){} setLoading(false); };
+  const loadData = async () => { try { const res = await api.get('/eligibility'); setItems(Array.isArray(res.data) ? res.data : (res.data?.items || res.data?.data || res.data?.rows || [])); } catch(e){} setLoading(false); };
 
   const handleSave = async () => {
     try {

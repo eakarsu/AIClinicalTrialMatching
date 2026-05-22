@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactMarkdown from 'react-markdown';
+import AIResultDisplay from '../components/AIResultDisplay';
 
 export default function MatchesPage() {
   const [items, setItems] = useState([]);
@@ -20,7 +21,7 @@ export default function MatchesPage() {
   const loadData = async () => {
     try {
       const [m, p, t] = await Promise.all([api.get('/matches'), api.get('/patients'), api.get('/trials')]);
-      setItems(m.data); setPatients(p.data); setTrials(t.data);
+      setItems(Array.isArray(m.data) ? m.data : (m.data?.items || m.data?.data || m.data?.rows || [])); setPatients(Array.isArray(p.data) ? p.data : (p.data?.items || p.data?.data || p.data?.rows || [])); setTrials(Array.isArray(t.data) ? t.data : (t.data?.items || t.data?.data || t.data?.rows || []));
     } catch(e) {} setLoading(false);
   };
 
@@ -80,11 +81,7 @@ export default function MatchesPage() {
         </div>
         {aiLoading && <div className="ai-loading"><div className="pulse"></div><p>AI is screening patient eligibility...</p></div>}
         {aiResult && (
-          <div className="ai-output">
-            <div className="ai-output-header"><span className="ai-badge">AI SCREENING</span><span className="model-info">Model: {aiResult.model || 'Claude Haiku'}</span></div>
-            <div className="ai-output-body"><ReactMarkdown>{aiResult.screening}</ReactMarkdown></div>
-            {aiResult.usage && <div className="ai-output-footer"><span>Tokens: {aiResult.usage.total_tokens}</span></div>}
-          </div>
+          <AIResultDisplay result={aiResult} loading={false} error={null} />
         )}
       </div>
     );
