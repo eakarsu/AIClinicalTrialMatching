@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "seed": "node src/seeds/seed.js"
+    "seed": "node src/seeds/seed.js",
+    "migrate": "node src/scripts/migrate.js",
+    "test": "node --test src/tests/*.test.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

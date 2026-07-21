@@ -1,0 +1,7 @@
+class ClinicalError extends Error{constructor(message,status=400){super(message);this.status=status;}}
+const text=(v,n,max=4000)=>{if(typeof v!=='string'||!v.trim())throw new ClinicalError(`${n} is required`);const x=v.trim();if(x.length>max)throw new ClinicalError(`${n} is too long`);return x;};
+function eligibility(result){const allowed=['met','not_met','unknown'];if(!Array.isArray(result)||!result.length)throw new ClinicalError('criteria results are required');for(const row of result){text(row.criterionId,'criterionId',100);if(!allowed.includes(row.result))throw new ClinicalError('Invalid criterion result');text(row.evidenceRef,'evidenceRef',500);}const met=result.filter(x=>x.result==='met').length,failed=result.filter(x=>x.result==='not_met').length,unknown=result.filter(x=>x.result==='unknown').length;return{met,failed,unknown,score:Math.round(met/result.length*1000)/1000,state:failed?'needs_professional_review':unknown?'needs_information':'needs_professional_review'};}
+function validConsent(consent,now=new Date()){if(!consent||consent.status!=='active')return false;const expiry=new Date(consent.expiresAt);return Number.isFinite(expiry.valueOf())&&expiry>now;}
+function requireRole(role,allowed){if(!allowed.includes(role))throw new ClinicalError('Licensed professional review role required',403);}
+function idempotency(req){const k=req.get('Idempotency-Key');if(!k||!/^[\w.:-]{8,128}$/.test(k))throw new ClinicalError('Valid Idempotency-Key required');return k;}
+module.exports={ClinicalError,text,eligibility,validConsent,requireRole,idempotency};

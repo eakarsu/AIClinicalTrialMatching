@@ -20,11 +20,6 @@ export default function LoginPage({ onLogin }) {
     setLoading(false);
   };
 
-  const autoFill = () => {
-    setEmail('admin@clinicaltrial.com');
-    setPassword('password123');
-  };
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -45,9 +40,6 @@ export default function LoginPage({ onLogin }) {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        <button className="btn auto-fill-btn" onClick={autoFill}>
-          Quick Login (Demo Account)
-        </button>
       </div>
     </div>
   );

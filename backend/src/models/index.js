@@ -1,9 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
+if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_PASSWORD) throw new Error('DB_NAME, DB_USER, and DB_PASSWORD are required');
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'clinical_trial_matching',
-  process.env.DB_USER || 'postgres',
-  process.env.DB_PASSWORD || 'postgres',
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
@@ -36,6 +37,9 @@ const Patient = sequelize.define('Patient', {
   medicalHistory: { type: DataTypes.TEXT },
   currentMedications: { type: DataTypes.TEXT },
   status: { type: DataTypes.STRING, defaultValue: 'active' },
+  // Provenance for patients ingested from an external EHR (FHIR) sync.
+  mrn: { type: DataTypes.STRING },              // medical record number / external id
+  source: { type: DataTypes.STRING },           // e.g. "Epic (EHR)", "manual"
 });
 
 // Clinical Trial Model
@@ -267,9 +271,24 @@ Trial.hasMany(Eligibility, { foreignKey: 'trialId' });
 Trial.hasMany(Outcome, { foreignKey: 'trialId' });
 Patient.hasMany(Outcome, { foreignKey: 'patientId' });
 
+// Integration Model — a connection to an external EHR/EDC/CTMS system.
+const Integration = sequelize.define('Integration', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  system: { type: DataTypes.STRING, allowNull: false },   // EHR | EDC | CTMS
+  vendor: { type: DataTypes.STRING, allowNull: false },   // epic | cerner | medidata | veeva
+  name: { type: DataTypes.STRING },                       // display label
+  baseUrl: { type: DataTypes.STRING },                    // FHIR/API base (live mode)
+  mode: { type: DataTypes.STRING, defaultValue: 'sandbox' }, // sandbox | live
+  status: { type: DataTypes.STRING, defaultValue: 'connected' }, // connected | disconnected | error
+  config: { type: DataTypes.JSONB, defaultValue: {} },    // credentials/options (token, clientId…)
+  lastSyncAt: { type: DataTypes.DATE },
+  lastSyncSummary: { type: DataTypes.JSONB, defaultValue: {} },
+});
+
 module.exports = {
   sequelize,
   User,
+  Integration,
   Patient,
   Trial,
   Match,

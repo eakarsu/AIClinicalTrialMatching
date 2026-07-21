@@ -1,0 +1,2 @@
+const fs=require('fs'),path=require('path');const {sequelize}=require('../models');
+(async()=>{try{await sequelize.authenticate();await sequelize.sync();const dir=path.resolve(__dirname,'../../migrations');for(const f of fs.readdirSync(dir).filter(x=>x.endsWith('.sql')).sort()){await sequelize.query(fs.readFileSync(path.join(dir,f),'utf8'));console.log(`applied ${f}`);}}catch(e){console.error(e);process.exitCode=1;}finally{await sequelize.close();}})();

@@ -770,6 +770,8 @@ body {
 .severity-grade2 { color: #f39c12; }
 .severity-grade3 { color: #e74c3c; }
 .severity-grade4 { color: #c0392b; }
+
+/* ============================================================
    AIResultDisplay v2 — professional renderer styles
    ============================================================ */
 .ai-panel {

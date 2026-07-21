@@ -1,4 +1,5 @@
 require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) throw new Error('JWT_SECRET must be at least 32 characters');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -41,7 +42,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '1mb' }));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -75,6 +76,7 @@ app.use('/api/custom-views', require('./routes/customViews'));
 // Export routes — mount reportRoutes at /api/export so /export/matches becomes /api/export/matches
 const exportRoutes = require('./routes/reports');
 app.use('/api/export', exportRoutes);
+app.use('/api/governed-matching', require('./routes/governedMatching'));
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -84,9 +86,6 @@ async function start() {
   try {
     await sequelize.authenticate();
     console.log('Database connected successfully.');
-    await sequelize.sync({ alter: true });
-    console.log('Database synced.');
-    
 app.use('/api/outcome-predictor', require('./routes/outcomePredictor')); // apply pass 6 — audit custom suggestion
 
 app.use('/api/site-network-optimizer', require('./routes/siteNetworkOptimizer')); // apply pass 6 — audit custom suggestion
@@ -105,16 +104,3 @@ app.listen(PORT, () => {
 }
 
 start();
-
-
-// === Batch 01 Gaps & Frontend Mounts ===
-app.use('/api/gap-no-ai-emr-to-protocol-matcher-only-manual-screenin', require('./routes/gap_no_ai_emr_to_protocol_matcher_only_manual_screenin'));
-app.use('/api/gap-no-ai-patient-friendly-consent-form-generator', require('./routes/gap_no_ai_patient_friendly_consent_form_generator'));
-app.use('/api/gap-no-ai-investigator-brochure-summarization', require('./routes/gap_no_ai_investigator_brochure_summarization'));
-app.use('/api/gap-no-ai-digital-twin-synthetic-control-arm', require('./routes/gap_no_ai_digital_twin_synthetic_control_arm'));
-app.use('/api/gap-no-direct-edc-ctms-ehr-api-client-medidata-veeva-e', require('./routes/gap_no_direct_edc_ctms_ehr_api_client_medidata_veeva_e'));
-app.use('/api/gap-no-e-consent-module-with-audit-trail', require('./routes/gap_no_e_consent_module_with_audit_trail'));
-app.use('/api/gap-no-remote-monitoring-televisit-module', require('./routes/gap_no_remote_monitoring_televisit_module'));
-app.use('/api/gap-no-randomization-trial-supply-management-rtsm', require('./routes/gap_no_randomization_trial_supply_management_rtsm'));
-app.use('/api/gap-no-patient-engagement-portal-with-rewards', require('./routes/gap_no_patient_engagement_portal_with_rewards'));
-app.use('/api/gap-notification-routes-exist-but-no-sms-email-deliver', require('./routes/gap_notification_routes_exist_but_no_sms_email_deliver'));

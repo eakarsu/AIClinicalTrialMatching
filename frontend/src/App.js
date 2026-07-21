@@ -21,6 +21,7 @@ import AIToolsPage from './pages/AIToolsPage';
 import WebhooksPage from './pages/WebhooksPage';
 import CustomViewsPage from './pages/CustomViewsPage';
 import RetentionRiskPage from './pages/RetentionRiskPage';
+import IntegrationsPage from './pages/IntegrationsPage';
 
 import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
 import CodexOperationsFeature from './pages/CodexOperationsFeature';
@@ -49,6 +50,7 @@ function Sidebar({ user, onLogout }) {
     { path: '/reports', icon: '\u{1F4C4}', label: 'Reports' },
     { path: '/webhooks', icon: '\u{1FA9D}', label: 'Webhooks' },
     { path: '/custom-views', icon: '\u{1F4CA}', label: 'Trial Views' },
+    { path: '/integrations', icon: '\u{1F50C}', label: 'Integrations' },
   ];
 
   return (
@@ -152,6 +154,7 @@ function App() {
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/webhooks" element={<WebhooksPage />} />
           <Route path="/custom-views" element={<CustomViewsPage />} />
+          <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </ProtectedLayout>
