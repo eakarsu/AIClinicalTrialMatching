@@ -12,6 +12,8 @@ const MODEL = process.env.OPENROUTER_MODEL || 'anthropic/claude-3-5-sonnet-20241
 
 function callOpenRouter(messages, maxTokens = 3000) {
   return new Promise((resolve, reject) => {
+    const baseUrl = process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1';
+    const url = new URL(`${baseUrl.replace(/\/$/, '')}/chat/completions`);
     const data = JSON.stringify({
       model: MODEL,
       messages,
@@ -19,8 +21,9 @@ function callOpenRouter(messages, maxTokens = 3000) {
     });
 
     const options = {
-      hostname: 'openrouter.ai',
-      path: '/api/v1/chat/completions',
+      hostname: url.hostname,
+      port: url.port || undefined,
+      path: `${url.pathname}${url.search}`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
