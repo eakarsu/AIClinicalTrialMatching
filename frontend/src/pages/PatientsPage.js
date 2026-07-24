@@ -120,7 +120,7 @@ export default function PatientsPage() {
             <tr><th>Name</th><th>Diagnosis</th><th>Stage</th><th>Gender</th><th>Biomarkers</th><th>Status</th></tr>
           </thead>
           <tbody>
-            {(items || []).filter(p => `${p.firstName} ${p.lastName} ${p.diagnosis}`.toLowerCase().includes(search.toLowerCase())).map(p => (
+            {patients.filter(p => `${p.firstName} ${p.lastName} ${p.diagnosis}`.toLowerCase().includes(search.toLowerCase())).map(p => (
               <tr key={p.id} onClick={() => setSelected(p)}>
                 <td><strong>{p.firstName} {p.lastName}</strong></td>
                 <td>{p.diagnosis}</td>
