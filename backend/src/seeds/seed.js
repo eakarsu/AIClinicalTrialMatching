@@ -2,6 +2,12 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '../../../.e
 const bcrypt = require('bcryptjs');
 const { sequelize, User, Patient, Trial, Match, Site, Enrollment, AdverseEvent, Protocol, Biomarker, DrugInteraction, Regulatory, Notification, Report, Eligibility, Outcome } = require('../models');
 
+function requireDemoPassword() {
+  const password = process.env.DEMO_PASSWORD || process.env.SEED_DEMO_PASSWORD || process.env.DEMO_SEED_PASSWORD || '';
+  if (password.length < 12 || password.length > 1024) throw new Error('DEMO_PASSWORD must contain 12-1024 characters');
+  return password;
+}
+
 async function seed() {
   try {
     await sequelize.authenticate();
@@ -10,7 +16,7 @@ async function seed() {
     console.log('Tables created.');
 
     // Users
-    const hashedPassword = await bcrypt.hash('password123', 10);
+    const hashedPassword = await bcrypt.hash(requireDemoPassword(), 10);
     await User.bulkCreate([
       { email: 'admin@clinicaltrial.com', password: hashedPassword, name: 'Dr. Sarah Johnson', role: 'admin' },
       { email: 'researcher@clinicaltrial.com', password: hashedPassword, name: 'Dr. Michael Chen', role: 'researcher' },
