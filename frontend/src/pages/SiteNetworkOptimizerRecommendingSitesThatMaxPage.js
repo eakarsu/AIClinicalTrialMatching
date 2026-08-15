@@ -1,3 +1,4 @@
+import GeneratedAiResponse from './GeneratedAiResponse';
 // === Batch 01 Gaps & Frontend Mounts ===
 // Feature: Site network optimizer recommending sites that maximize recruitment speed and diversity
 import React, { useState } from 'react';
@@ -47,9 +48,7 @@ export default function SiteNetworkOptimizerRecommendingSitesThatMaxPage() {
       </div>
       {err && <div style={{ marginTop: 12, padding: 10, background: '#7f1d1d', borderRadius: 6, color: '#fee2e2' }}>{err}</div>}
       {result && (
-        <pre style={{ marginTop: 16, padding: 12, background: '#1f2937', borderRadius: 6, color: '#d1d5db', maxHeight: 480, overflow: 'auto', fontSize: 12 }}>
-{JSON.stringify(result, null, 2)}
-        </pre>
+        <GeneratedAiResponse response={result} />
       )}
     </div>
   );
