@@ -1,3 +1,4 @@
+import FormattedAIReport from "./FormattedAIReport";
 import React, { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
@@ -249,7 +250,7 @@ function ItemCard({ item, index }) {
 
         {Object.entries(item).map(([k, v]) => {
           if (consumed.has(k)) return null;
-          if (v == null || v === '') return null;
+          if (v == null) return null;
           return (
             <div className="ai-kv" key={k}>
               <div className="ai-kv-key">{k.replace(/_/g, ' ')}</div>
@@ -263,7 +264,8 @@ function ItemCard({ item, index }) {
 }
 
 function Value({ v }) {
-  if (v == null || v === '') return <span className="ai-empty">—</span>;
+  if (v == null) return <span className="ai-empty">Not provided</span>;
+  if (v === '') return <span className="ai-empty">Empty string</span>;
   if (typeof v === 'boolean') return <Badge color={v ? '#22c55e' : '#64748b'}>{v ? 'YES' : 'NO'}</Badge>;
   if (typeof v === 'number') return <span className="ai-num">{v.toLocaleString()}</span>;
   if (typeof v === 'string') {
@@ -302,7 +304,7 @@ function Value({ v }) {
 }
 
 function isEmptyValue(v) {
-  if (v == null || v === '') return true;
+  if (v == null) return true;
   if (Array.isArray(v)) return v.length === 0;
   if (isPlainObject(v)) return Object.keys(v).length === 0;
   return false;
@@ -315,6 +317,7 @@ function normalize(result) {
   if (!result || typeof result !== 'object') return { sections: {}, leadSummary: null };
 
   const { summary, raw, error, ...rest } = result;
+  if (summary === '') rest.summary = '';
 
   let parsed = null;
   let leadSummary = null;
@@ -339,7 +342,7 @@ function normalize(result) {
   } else if (isPlainObject(parsed)) {
     // Promote parsed.summary as the lead if present
     let parsedClone = parsed;
-    if (typeof parsed.summary === 'string' && !leadSummary) {
+    if (typeof parsed.summary === 'string' && parsed.summary !== '' && !leadSummary) {
       leadSummary = parsed.summary;
       const { summary: _s, ...rest2 } = parsed;
       parsedClone = rest2;
@@ -385,7 +388,7 @@ function AIResultDisplay({ result, loading, error }) {
   if (!result) return null;
 
   const { sections, leadSummary, error: aiError, raw } = normalized;
-  const sectionEntries = Object.entries(sections).filter(([, v]) => v != null && v !== '');
+  const sectionEntries = Object.entries(sections).filter(([, v]) => v != null);
 
   const copy = async () => {
     try {
@@ -440,7 +443,7 @@ function AIResultDisplay({ result, loading, error }) {
         )}
 
         {!sectionEntries.length && !leadSummary && !aiError && raw && (
-          <pre className="ai-raw-pre">{String(raw).slice(0, 2000)}</pre>
+          <FormattedAIReport response={raw} />
         )}
       </div>
     </div>

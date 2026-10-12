@@ -1,0 +1,100 @@
+[
+  {
+    "name": "IntegrationsWithMedidataRaveEdcVeevaVaultCtPage",
+    "id": "cf-integrations-with-medidata-rave-edc-veeva-vault-ct",
+    "title": "Integrations with Medidata Rave (EDC), Veeva Vault (CTMS), and Epic/Cerner (EHR)",
+    "description": "Prepare a professional advisory report for integrations with medidata rave (edc), veeva vault (ctms), and epic/cerner (ehr) using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoAiDigitalTwinSyntheticControlArmPage",
+    "id": "gap-no-ai-digital-twin-synthetic-control-arm",
+    "title": "No AI digital twin / synthetic control arm",
+    "description": "Prepare a professional advisory report for no ai digital twin / synthetic control arm using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoAiEmrToProtocolMatcherOnlyManualScreeninPage",
+    "id": "gap-no-ai-emr-to-protocol-matcher-only-manual-screenin",
+    "title": "No AI EMR-to-protocol matcher (only manual screening)",
+    "description": "Prepare a professional advisory report for no ai emr-to-protocol matcher (only manual screening) using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoAiInvestigatorBrochureSummarizationPage",
+    "id": "gap-no-ai-investigator-brochure-summarization",
+    "title": "No AI investigator-brochure summarization",
+    "description": "Prepare a professional advisory report for no ai investigator-brochure summarization using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoAiPatientFriendlyConsentFormGeneratorPage",
+    "id": "gap-no-ai-patient-friendly-consent-form-generator",
+    "title": "No AI patient-friendly consent-form generator",
+    "description": "Prepare a professional advisory report for no ai patient-friendly consent-form generator using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoDirectEdcCtmsEhrApiClientMedidataVeevaEPage",
+    "id": "gap-no-direct-edc-ctms-ehr-api-client-medidata-veeva-e",
+    "title": "No direct EDC/CTMS/EHR API client (Medidata, Veeva, Epic) beyond webhook scaffold",
+    "description": "Prepare a professional advisory report for no direct edc/ctms/ehr api client (medidata, veeva, epic) beyond webhook scaffold using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoEConsentModuleWithAuditTrailPage",
+    "id": "gap-no-e-consent-module-with-audit-trail",
+    "title": "No e-consent module with audit trail",
+    "description": "Prepare a professional advisory report for no e-consent module with audit trail using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoPatientEngagementPortalWithRewardsPage",
+    "id": "gap-no-patient-engagement-portal-with-rewards",
+    "title": "No patient-engagement portal with rewards",
+    "description": "Prepare a professional advisory report for no patient-engagement portal with rewards using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoRandomizationTrialSupplyManagementRtsmPage",
+    "id": "gap-no-randomization-trial-supply-management-rtsm",
+    "title": "No randomization & trial-supply management (RTSM)",
+    "description": "Prepare a professional advisory report for no randomization & trial-supply management (rtsm) using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NoRemoteMonitoringTelevisitModulePage",
+    "id": "gap-no-remote-monitoring-televisit-module",
+    "title": "No remote-monitoring/televisit module",
+    "description": "Prepare a professional advisory report for no remote-monitoring/televisit module using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "NotificationRoutesExistButNoSmsEmailDeliverPage",
+    "id": "gap-notification-routes-exist-but-no-sms-email-deliver",
+    "title": "Notification routes exist but no SMS/email delivery channel",
+    "description": "Prepare a professional advisory report for notification routes exist but no sms/email delivery channel using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "PatientOutcomePredictorMlModelForecastingDroPage",
+    "id": "cf-patient-outcome-predictor-ml-model-forecasting-dro",
+    "title": "Patient outcome predictor ML model forecasting dropouts and adverse events early",
+    "description": "Prepare a professional advisory report for patient outcome predictor ml model forecasting dropouts and adverse events early using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "RegulatoryComplianceAgentAutoGeneratingAmendmPage",
+    "id": "cf-regulatory-compliance-agent-auto-generating-amendm",
+    "title": "Regulatory compliance agent auto-generating amendments, adverse-event reports, and submissions",
+    "description": "Prepare a professional advisory report for regulatory compliance agent auto-generating amendments, adverse-event reports, and submissions using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "SiteNetworkOptimizerRecommendingSitesThatMaxPage",
+    "id": "cf-site-network-optimizer-recommending-sites-that-max",
+    "title": "Site network optimizer recommending sites that maximize recruitment speed and diversity",
+    "description": "Prepare a professional advisory report for site network optimizer recommending sites that maximize recruitment speed and diversity using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  }
+]

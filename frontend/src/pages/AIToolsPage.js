@@ -1,3 +1,4 @@
+import CompleteAIExamples, { AIRequiredButton } from "../components/CompleteAIExamples";
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import api from '../services/api';
@@ -320,7 +321,7 @@ export default function AIToolsPage() {
     const set = (val) => setForm({ ...form, [f.name]: val });
     if (f.type === 'select-patient') {
       return (
-        <select value={v} onChange={(e) => set(e.target.value)}>
+        <select required={!f.optional} data-ai-field={f.name} value={v} onChange={(e) => set(e.target.value)}>
           <option value="">Select Patient</option>
           {refs.patients.map((p) => (
             <option key={p.id} value={p.id}>
@@ -332,7 +333,7 @@ export default function AIToolsPage() {
     }
     if (f.type === 'select-trial') {
       return (
-        <select value={v} onChange={(e) => set(e.target.value)}>
+        <select required={!f.optional} data-ai-field={f.name} value={v} onChange={(e) => set(e.target.value)}>
           <option value="">Select Trial</option>
           {refs.trials.map((t) => (
             <option key={t.id} value={t.id}>
@@ -344,7 +345,7 @@ export default function AIToolsPage() {
     }
     if (f.type === 'select-protocol') {
       return (
-        <select value={v} onChange={(e) => set(e.target.value)}>
+        <select required={!f.optional} data-ai-field={f.name} value={v} onChange={(e) => set(e.target.value)}>
           <option value="">Select Protocol</option>
           {refs.protocols.map((p) => (
             <option key={p.id} value={p.id}>
@@ -356,7 +357,7 @@ export default function AIToolsPage() {
     }
     if (f.type === 'select') {
       return (
-        <select value={v} onChange={(e) => set(e.target.value)}>
+        <select required={!f.optional} data-ai-field={f.name} value={v} onChange={(e) => set(e.target.value)}>
           <option value="">Select...</option>
           {f.options.map((o) => (
             <option key={o} value={o}>
@@ -367,16 +368,22 @@ export default function AIToolsPage() {
       );
     }
     if (f.type === 'textarea') {
-      return <textarea value={v} onChange={(e) => set(e.target.value)} rows={5} />;
+      return <textarea required={!f.optional} data-ai-field={f.name} value={v} onChange={(e) => set(e.target.value)} rows={5} />;
     }
-    return <input value={v} onChange={(e) => set(e.target.value)} />;
+    return <input min={f.name === "runs" ? 2 : f.type === "number" ? 0 : undefined} max={f.name === "runs" ? 5 : undefined} type={f.type === "number" ? "number" : "text"} required={!f.optional} data-ai-field={f.name} value={v} onChange={(e) => set(e.target.value)} />;
   };
 
   const resultText =
     result && active.resultKey ? result[active.resultKey] : result ? JSON.stringify(result, null, 2) : '';
 
+  const examples = [
+    { values: { medications: 'Metformin 500 mg twice daily; lisinopril 10 mg daily', protocol_text: 'Illustrative phase II protocol: adults with a documented diagnosis are randomized 1:1; primary endpoint is response at week 12; safety is reviewed at every visit.', enrollment_challenges: 'Two sites have slower screening than planned; review eligibility wording and referral flow before proposing amendments.', biomarker_name: 'HbA1c' } },
+    { values: { medications: 'Warfarin 5 mg daily; amiodarone 200 mg daily', protocol_text: 'Illustrative multicenter protocol: compare standard care with the study intervention; monitor adverse events through day 90.', enrollment_challenges: 'Screen failures increased at one site; compare screening reasons and site capacity using actual study records.', biomarker_name: 'C-reactive protein' } },
+    { values: { medications: 'Sertraline 50 mg daily; omeprazole 20 mg daily', protocol_text: 'Illustrative observational protocol: follow consenting participants for six months; document outcomes and missing data.', enrollment_challenges: 'Recruitment is behind target; assess referral sources, visit burden, and consent comprehension.', biomarker_name: 'LDL cholesterol' } },
+  ];
+
   return (
-    <div>
+    <CompleteAIExamples key={active.key} busy={loading} context={`Clinical trial planning: ${active.name}`} presets={examples}><div>
       <div className="page-header">
         <h1>AI Tools</h1>
       </div>
@@ -416,9 +423,9 @@ export default function AIToolsPage() {
           ))}
         </div>
         <div className="detail-actions" style={{ marginTop: 12 }}>
-          <button className="btn btn-primary" onClick={run} disabled={loading}>
+          <AIRequiredButton data-ai-generate className="btn btn-primary" onClick={run} disabled={loading}>
             {loading ? 'Running...' : 'Run AI Workflow'}
-          </button>
+          </AIRequiredButton>
         </div>
       </div>
 
@@ -449,6 +456,6 @@ export default function AIToolsPage() {
           )}
         </div>
       )}
-    </div>
+    </div></CompleteAIExamples>
   );
 }

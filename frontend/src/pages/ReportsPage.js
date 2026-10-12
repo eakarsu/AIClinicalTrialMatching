@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactMarkdown from 'react-markdown';
 import AIResultDisplay from '../components/AIResultDisplay';
+import FormattedAIReport from '../components/FormattedAIReport';
 
 export default function ReportsPage() {
   const [items, setItems] = useState([]);
@@ -14,6 +15,7 @@ export default function ReportsPage() {
   const [aiLoading, setAiLoading] = useState(false);
   const [reportType, setReportType] = useState('enrollment');
   const [reportTrialId, setReportTrialId] = useState('');
+  const [presetMessage, setPresetMessage] = useState('');
   const [trials, setTrials] = useState([]);
   const emptyForm = { title: '', type: '', description: '', parameters: '', generatedBy: '', status: 'generated', data: '', format: 'pdf' };
   const [form, setForm] = useState(emptyForm);
@@ -70,17 +72,7 @@ export default function ReportsPage() {
             <div className="detail-field"><label>Created</label><div className="value">{new Date(selected.createdAt).toLocaleString()}</div></div>
           </div>
           <div className="detail-field" style={{marginTop: 16}}><label>Description</label><div className="value">{selected.description}</div></div>
-          {parsedData && (
-            <div style={{marginTop: 16, background: '#f8f9fa', padding: 16, borderRadius: 8}}>
-              <label style={{fontSize: 12, fontWeight: 600, color: '#888', textTransform: 'uppercase'}}>Report Data</label>
-              {Object.entries(parsedData).map(([key, val]) => (
-                <div key={key} style={{display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee'}}>
-                  <span style={{fontWeight: 600, color: '#555'}}>{key.replace(/_/g, ' ')}</span>
-                  <span style={{fontWeight: 700, color: '#6c5ce7'}}>{val}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          {selected.data !== null && selected.data !== undefined && <FormattedAIReport response={parsedData ?? selected.data} title="Saved report data" />}
           <div className="detail-actions">
             <button className="btn btn-warning" onClick={() => handleEdit(selected)}>Edit</button>
             <button className="btn btn-danger" onClick={() => handleDelete(selected.id)}>Delete</button>
@@ -115,6 +107,8 @@ export default function ReportsPage() {
             </select>
           </div>
         </div>
+        <div className="ai-preset-bar"><strong>Report examples</strong><div className="ai-actions">{['Enrollment review', 'Safety review', 'Site performance'].map((label, index) => <button key={label} type="button" className="btn btn-secondary" disabled={aiLoading} onClick={() => { setReportType(['enrollment', 'safety', 'performance'][index]); setReportTrialId((current) => trials.some((trial) => String(trial.id) === String(current)) ? current : trials[index % trials.length]?.id || ''); setPresetMessage(trials.length ? 'Both fields filled. Review the selected saved trial before generating.' : 'Report type selected; no saved trial is available, so the optional scope is All Trials.'); }}>{label}</button>)}</div></div>
+        {presetMessage && <p role="status">{presetMessage}</p>}
         <button className="btn btn-primary" onClick={handleAIReport} disabled={aiLoading}>Generate AI Report</button>
         {aiLoading && <div className="ai-loading" style={{marginTop: 16}}><div className="pulse"></div><p>AI is generating report...</p></div>}
         {aiResult && (
